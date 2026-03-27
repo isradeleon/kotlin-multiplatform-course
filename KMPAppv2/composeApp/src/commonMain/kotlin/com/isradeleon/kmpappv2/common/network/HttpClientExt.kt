@@ -1,7 +1,11 @@
 package com.isradeleon.kmpappv2.common.network
 
-import kotlinx.coroutines.ensureActive
-import kotlin.coroutines.coroutineContext
+import com.isradeleon.kmpappv2.common.FailureData
+import com.isradeleon.kmpappv2.common.Response
+import io.ktor.client.call.body
+import io.ktor.client.network.sockets.SocketTimeoutException
+import io.ktor.client.statement.HttpResponse
+import io.ktor.util.network.UnresolvedAddressException
 
 /**
  * The reified kotlin keyword, allows you to access the
@@ -17,7 +21,42 @@ import kotlin.coroutines.coroutineContext
  */
 suspend inline fun <reified T> safeCall(
     execute: () -> HttpResponse
-) {
+): Response<T, FailureData.Remote> {
+    return try {
+        responseToResult(
+            execute()
+        )
+    } catch (e: Exception) {
+        when(e) {
+            is SocketTimeoutException -> Response.Fail(
+                FailureData.Remote.TIMEOUT
+            )
+            is UnresolvedAddressException ->  Response.Fail(
+                FailureData.Remote.NO_CONNECTION
+            )
+            else -> {
+                Response.Fail(
+                    FailureData.Remote.UNKNOWN
+                )
+            }
+        }
+    }
+}
 
-    coroutineContext.ensureActive()
+suspend inline fun <reified T> responseToResult(
+    response: HttpResponse
+): Response<T, FailureData.Remote> {
+    return when(response.status.value) {
+        in 200..299 -> {
+            try {
+                Response.Success(response.body<T>())
+            } catch(e: Exception) {
+                Response.Fail(FailureData.Remote.SERIALIZATION)
+            }
+        }
+        408 -> Response.Fail(FailureData.Remote.TIMEOUT)
+        429 -> Response.Fail(FailureData.Remote.TOO_MANY_REQUESTS)
+        in 500..599 -> Response.Fail(FailureData.Remote.SERVER_ERROR)
+        else -> Response.Fail(FailureData.Remote.UNKNOWN)
+    }
 }
