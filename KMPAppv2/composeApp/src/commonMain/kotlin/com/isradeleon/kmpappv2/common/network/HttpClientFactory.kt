@@ -1,5 +1,6 @@
 package com.isradeleon.kmpappv2.common.network
 
+import com.isradeleon.kmpappv2.BuildKonfig
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.plugins.HttpTimeout
@@ -8,6 +9,7 @@ import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
+import io.ktor.http.headers
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
@@ -45,6 +47,12 @@ object HttpClientFactory {
 
             defaultRequest {
                 // Here you would set up the headers
+                headers {
+                    append(
+                        "x-access-token",
+                        BuildKonfig.COINRANKING_KEY
+                    )
+                }
 
                 // Content type
                 contentType(ContentType.Application.Json)

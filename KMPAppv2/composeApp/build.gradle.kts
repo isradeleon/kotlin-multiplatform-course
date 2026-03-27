@@ -1,5 +1,7 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
+import org.jetbrains.compose.internal.utils.getLocalProperty
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -10,6 +12,9 @@ plugins {
     // Kotlin serialization & KSP plugins
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.ksp)
+
+    // BuildKonfig plugin to manage local API keys
+    id("com.codingfeline.buildkonfig")
 }
 
 kotlin {
@@ -59,6 +64,10 @@ kotlin {
             implementation(libs.ktor.ios)
         }
     }
+
+    // your target config...
+    androidTarget()
+    iosX64()
 }
 
 android {
@@ -85,6 +94,30 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+}
+
+/**
+ * Custom BuildKonfig block for simulating the
+ * classic BuildConfig behavior, but now for iOS as well.
+ */
+buildkonfig {
+    // Set the package name where the BuildKonfig object will be generated. This is required.
+    packageName = "com.isradeleon.kmpappv2"
+    // objectName = "YourAwesomeConfig"
+    // exposeObjectWithName = "YourAwesomePublicConfig"
+
+    defaultConfigs {
+        // Access the local.properties file
+        val apiKey = project.getLocalProperty("COINRANKING_KEY") ?: ""
+
+        // Make api key required
+        require(apiKey.isNotEmpty()) {
+            "Register your api key from developer and place it in local.properties as `COINRANKING_KEY`"
+        }
+
+        // Add the property to the generated BuildKonfig object
+        buildConfigField(STRING, "COINRANKING_KEY", apiKey)
     }
 }
 
