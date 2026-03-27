@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.isradeleon.kmpappv2.domain.model.Coin
-import com.isradeleon.kmpappv2.presentation.state.CoinsState
+import com.isradeleon.kmpappv2.presentation.coins.CoinsListState
 
 @Composable
 fun CoinsListScreen(
@@ -37,7 +37,7 @@ fun CoinsListScreen(
 
 @Composable
 fun CoinsListContent(
-    state: CoinsState,
+    state: CoinsListState,
     onCoinClicked: (String) -> Unit
 ) {
     Box(

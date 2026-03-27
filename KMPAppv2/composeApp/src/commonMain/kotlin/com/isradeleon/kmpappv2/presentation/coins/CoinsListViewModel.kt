@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.isradeleon.kmpappv2.common.Response
 import com.isradeleon.kmpappv2.domain.GetCoinsUseCase
-import com.isradeleon.kmpappv2.presentation.state.CoinsState
+import com.isradeleon.kmpappv2.presentation.coins.CoinsListState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.onStart
@@ -15,7 +15,7 @@ class CoinsListViewModel(
     private val getCoinsUseCase: GetCoinsUseCase
 ): ViewModel() {
     // Implemented StateFlow, which stores the last state.
-    private val _state = MutableStateFlow(CoinsState())
+    private val _state = MutableStateFlow(CoinsListState())
     val state = _state
         // Replacement for the init VM function
         .onStart { // Called when someone begins collecting the state flow.
@@ -30,21 +30,21 @@ class CoinsListViewModel(
              * 5 seconds window (for example during a configuration change).
              */
             started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = CoinsState()
+            initialValue = CoinsListState()
         )
 
     private suspend fun getCoinsList() {
         when(val coinsResponse = getCoinsUseCase.execute()) {
             is Response.Fail -> {
                 _state.update {
-                    CoinsState(
+                    CoinsListState(
                         error = null // TODO: Handle error message.
                     )
                 }
             }
             is Response.Success -> {
                 _state.update {
-                    CoinsState(
+                    CoinsListState(
                         coins = coinsResponse.data
                     )
                 }
