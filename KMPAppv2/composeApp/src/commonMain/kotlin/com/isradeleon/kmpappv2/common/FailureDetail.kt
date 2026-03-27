@@ -1,7 +1,7 @@
 package com.isradeleon.kmpappv2.common
 
-sealed interface FailureData: Failure {
-    enum class Remote: FailureData {
+sealed interface FailureDetail: Failure {
+    enum class Remote: FailureDetail {
         TIMEOUT,
         TOO_MANY_REQUESTS,
         NO_CONNECTION,
@@ -10,7 +10,7 @@ sealed interface FailureData: Failure {
         UNKNOWN
     }
 
-    enum class Local: FailureData {
+    enum class Local: FailureDetail {
         DISK_FULL,
         DATABASE_ERROR,
         UNKNOWN

@@ -1,6 +1,6 @@
 package com.isradeleon.kmpappv2.common.network
 
-import com.isradeleon.kmpappv2.common.FailureData
+import com.isradeleon.kmpappv2.common.FailureDetail
 import com.isradeleon.kmpappv2.common.Response
 import io.ktor.client.call.body
 import io.ktor.client.network.sockets.SocketTimeoutException
@@ -21,7 +21,7 @@ import io.ktor.util.network.UnresolvedAddressException
  */
 suspend inline fun <reified T> safeCall(
     execute: () -> HttpResponse
-): Response<T, FailureData.Remote> {
+): Response<T, FailureDetail.Remote> {
     return try {
         responseToResult(
             execute()
@@ -29,14 +29,14 @@ suspend inline fun <reified T> safeCall(
     } catch (e: Exception) {
         when(e) {
             is SocketTimeoutException -> Response.Fail(
-                FailureData.Remote.TIMEOUT
+                FailureDetail.Remote.TIMEOUT
             )
             is UnresolvedAddressException ->  Response.Fail(
-                FailureData.Remote.NO_CONNECTION
+                FailureDetail.Remote.NO_CONNECTION
             )
             else -> {
                 Response.Fail(
-                    FailureData.Remote.UNKNOWN
+                    FailureDetail.Remote.UNKNOWN
                 )
             }
         }
@@ -45,18 +45,18 @@ suspend inline fun <reified T> safeCall(
 
 suspend inline fun <reified T> responseToResult(
     response: HttpResponse
-): Response<T, FailureData.Remote> {
+): Response<T, FailureDetail.Remote> {
     return when(response.status.value) {
         in 200..299 -> {
             try {
                 Response.Success(response.body<T>())
-            } catch(e: Exception) {
-                Response.Fail(FailureData.Remote.SERIALIZATION)
+            } catch(_: Exception) {
+                Response.Fail(FailureDetail.Remote.SERIALIZATION)
             }
         }
-        408 -> Response.Fail(FailureData.Remote.TIMEOUT)
-        429 -> Response.Fail(FailureData.Remote.TOO_MANY_REQUESTS)
-        in 500..599 -> Response.Fail(FailureData.Remote.SERVER_ERROR)
-        else -> Response.Fail(FailureData.Remote.UNKNOWN)
+        408 -> Response.Fail(FailureDetail.Remote.TIMEOUT)
+        429 -> Response.Fail(FailureDetail.Remote.TOO_MANY_REQUESTS)
+        in 500..599 -> Response.Fail(FailureDetail.Remote.SERVER_ERROR)
+        else -> Response.Fail(FailureDetail.Remote.UNKNOWN)
     }
 }
