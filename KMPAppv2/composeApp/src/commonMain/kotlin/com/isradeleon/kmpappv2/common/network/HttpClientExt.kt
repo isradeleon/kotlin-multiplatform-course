@@ -27,6 +27,7 @@ suspend inline fun <reified T> safeCall(
             execute()
         )
     } catch (e: Exception) {
+        e.printStackTrace()
         when(e) {
             is SocketTimeoutException -> Response.Fail(
                 FailureDetail.Remote.TIMEOUT
@@ -50,7 +51,8 @@ suspend inline fun <reified T> responseToResult(
         in 200..299 -> {
             try {
                 Response.Success(response.body<T>())
-            } catch(_: Exception) {
+            } catch(e: Exception) {
+                e.printStackTrace()
                 Response.Fail(FailureDetail.Remote.SERIALIZATION)
             }
         }
