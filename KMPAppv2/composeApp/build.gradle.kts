@@ -55,6 +55,13 @@ kotlin {
             // Ktor common
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.bundles.ktor)
+
+            // Coil for image loading
+            implementation(libs.coil.compose.core)
+            implementation(libs.coil.compose)
+            implementation(libs.coil.core)
+            implementation(libs.coil.svg)
+            implementation(libs.coil.network.ktor)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
