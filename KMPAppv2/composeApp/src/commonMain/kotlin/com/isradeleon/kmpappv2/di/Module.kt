@@ -36,6 +36,8 @@ expect val platformModule: Module
 
 /**
  * Shared dependencies in the common main module.
+ * You could make multiple modules to better organize
+ * dependencies. For this practice app, one shared module is fine.
  */
 val sharedModule = module {
     /**
