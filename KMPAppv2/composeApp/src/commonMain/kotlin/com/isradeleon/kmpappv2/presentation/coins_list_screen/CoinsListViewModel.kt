@@ -1,13 +1,10 @@
-package com.isradeleon.kmpappv2.presentation.coins
+package com.isradeleon.kmpappv2.presentation.coins_list_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.isradeleon.kmpappv2.common.Response
 import com.isradeleon.kmpappv2.common.utils.toStringResource
 import com.isradeleon.kmpappv2.domain.GetCoinsUseCase
-import com.isradeleon.kmpappv2.presentation.coins.CoinsListState
-import kmpappv2.composeapp.generated.resources.Res
-import kmpappv2.composeapp.generated.resources.error_unknown
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.onStart

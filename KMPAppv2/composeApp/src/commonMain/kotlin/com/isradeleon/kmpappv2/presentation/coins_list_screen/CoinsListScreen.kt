@@ -1,4 +1,4 @@
-package com.isradeleon.kmpappv2.presentation.coins
+package com.isradeleon.kmpappv2.presentation.coins_list_screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
