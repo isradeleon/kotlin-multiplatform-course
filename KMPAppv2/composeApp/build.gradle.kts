@@ -15,6 +15,9 @@ plugins {
 
     // BuildKonfig plugin to manage local API keys
     id("com.codingfeline.buildkonfig")
+
+    // Room plugin
+    alias(libs.plugins.room)
 }
 
 kotlin {
@@ -72,6 +75,9 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.koin.compose.navigation)
+
+            // Room
+            implementation(libs.room.runtime)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -138,7 +144,14 @@ buildkonfig {
     }
 }
 
+// Room schema directory
+room {
+    schemaDirectory("$projectDir/schemas")
+}
+
 dependencies {
+    // Room compiler
+    ksp(libs.room.compiler)
     debugImplementation(libs.compose.uiTooling)
 }
 
