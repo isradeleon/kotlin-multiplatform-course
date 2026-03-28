@@ -37,12 +37,14 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun CoinsListScreen(
+    modifier: Modifier,
     onCoinClicked: (String) -> Unit
 ) {
     val coinsListViewModel = koinViewModel<CoinsListViewModel>()
     val state by coinsListViewModel.state.collectAsStateWithLifecycle() // Lifecycle aware!
 
     CoinsListContent(
+        modifier = modifier,
         state = state,
         onCoinClicked = onCoinClicked
     )
@@ -50,11 +52,12 @@ fun CoinsListScreen(
 
 @Composable
 fun CoinsListContent(
+    modifier: Modifier,
     state: CoinsListState,
     onCoinClicked: (String) -> Unit
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
