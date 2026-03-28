@@ -23,7 +23,7 @@ kotlinx-serialization = "1.7.3"
 coil-compose = "3.0.0"
 
 # Koin for Dependency Injection
-koin = "4.0.0"
+koin = "4.2.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
