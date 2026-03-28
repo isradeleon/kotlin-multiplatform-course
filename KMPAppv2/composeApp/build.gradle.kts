@@ -41,6 +41,10 @@ kotlin {
 
             // Ktor Android
             implementation(libs.ktor.android)
+
+            // Koin Android
+            implementation(libs.koin.android)
+            implementation(libs.koin.androidx.compose)
         }
         commonMain.dependencies {
             implementation(libs.compose.runtime)
@@ -62,6 +66,12 @@ kotlin {
             implementation(libs.coil.core)
             implementation(libs.coil.svg)
             implementation(libs.coil.network.ktor)
+
+            // Koin Dependency Injection
+            api(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
+            implementation(libs.koin.compose.navigation)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
