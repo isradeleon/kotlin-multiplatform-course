@@ -11,8 +11,10 @@ import kotlinx.coroutines.IO
  * that abstracts database creation for each platform:
  * Android & iOS.
  */
-@Suppress("NO_ACTUAL_FOR_EXPECT")
-expect object PortfolioDatabaseConstructor: RoomDatabaseConstructor<PortfolioDatabase>
+@Suppress("NO_ACTUAL_FOR_EXPECT", "EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
+expect object PortfolioDatabaseConstructor: RoomDatabaseConstructor<PortfolioDatabase> {
+    override fun initialize(): PortfolioDatabase
+}
 
 fun getPortfolioDatabase(
     builder: RoomDatabase.Builder<PortfolioDatabase>
