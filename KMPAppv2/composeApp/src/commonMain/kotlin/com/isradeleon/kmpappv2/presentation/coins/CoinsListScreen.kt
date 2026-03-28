@@ -28,6 +28,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
+import com.isradeleon.kmpappv2.common.utils.formatFiatCurrency
+import com.isradeleon.kmpappv2.common.utils.formatPercentage
 import com.isradeleon.kmpappv2.domain.model.Coin
 import com.isradeleon.kmpappv2.presentation.ext.isPositiveChange
 import com.isradeleon.kmpappv2.theme.LocalCoinRoutineColorsPalette
@@ -139,13 +141,13 @@ fun CoinListItem(
             horizontalAlignment = Alignment.End
         ) {
             Text(
-                text = "$${coin.price}",
+                text = formatFiatCurrency(coin.price),
                 color = MaterialTheme.colorScheme.onBackground,
                 fontSize = MaterialTheme.typography.titleMedium.fontSize
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = "${coin.change}% 24h",
+                text = formatPercentage(coin.change),
                 color = if (coin.isPositiveChange)
                         LocalCoinRoutineColorsPalette.current.profitGreen
                     else
