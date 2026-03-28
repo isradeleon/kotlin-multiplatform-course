@@ -27,17 +27,17 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
 import com.isradeleon.kmpappv2.domain.model.Coin
 import com.isradeleon.kmpappv2.presentation.ext.isPositiveChange
 import com.isradeleon.kmpappv2.theme.LocalCoinRoutineColorsPalette
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun CoinsListScreen(
     onCoinClicked: (String) -> Unit
 ) {
-    val coinsListViewModel = viewModel(CoinsListViewModel::class)
+    val coinsListViewModel = koinViewModel<CoinsListViewModel>()
     val state by coinsListViewModel.state.collectAsStateWithLifecycle() // Lifecycle aware!
 
     CoinsListContent(

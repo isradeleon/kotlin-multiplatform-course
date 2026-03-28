@@ -18,7 +18,7 @@ data class CoinDto(
     val rank: Int,
     val symbol: String,
     val name: String,
-    val description: String?,
+    val description: String? = null,
     val color: String,
     val iconUrl: String,
     /**
