@@ -88,10 +88,6 @@ kotlin {
             implementation(libs.ktor.ios)
         }
     }
-
-    // your target config...
-    androidTarget()
-    iosX64()
 }
 
 android {
