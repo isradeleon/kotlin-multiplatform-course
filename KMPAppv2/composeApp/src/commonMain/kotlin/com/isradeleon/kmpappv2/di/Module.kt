@@ -1,6 +1,9 @@
 package com.isradeleon.kmpappv2.di
 
+import androidx.room.RoomDatabase
 import com.isradeleon.kmpappv2.common.network.HttpClientFactory
+import com.isradeleon.kmpappv2.data.local.database.PortfolioDatabase
+import com.isradeleon.kmpappv2.data.local.database.getPortfolioDatabase
 import com.isradeleon.kmpappv2.data.remote.api.KtorCoinsRemoteDataSource
 import com.isradeleon.kmpappv2.data.remote.src.CoinsRemoteDataSource
 import com.isradeleon.kmpappv2.domain.GetCoinDetailUseCase
@@ -59,11 +62,28 @@ val sharedModule = module {
     }
 
     /**
-     * Other dependencies
+     * ViewModels
      */
     viewModel { CoinsListViewModel(get()) }
+
+    /**
+     * Use cases
+     */
     factory { GetCoinsUseCase(get()) }
     factory { GetCoinDetailUseCase(get()) }
     factory { GetPriceHistoryUseCase(get()) }
+
+    /**
+     * Data sources
+     */
     single<CoinsRemoteDataSource> { KtorCoinsRemoteDataSource(get()) }
+
+    /**
+     * Database
+     */
+    single<PortfolioDatabase> {
+        getPortfolioDatabase(
+            get<RoomDatabase.Builder<PortfolioDatabase>>()
+        )
+    }
 }
