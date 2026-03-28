@@ -12,7 +12,7 @@ sealed interface FailureDetail: Failure {
 
     enum class Local: FailureDetail {
         DISK_FULL,
-        DATABASE_ERROR,
+        INSUFFICIENT_FUNDS,
         UNKNOWN
     }
 }

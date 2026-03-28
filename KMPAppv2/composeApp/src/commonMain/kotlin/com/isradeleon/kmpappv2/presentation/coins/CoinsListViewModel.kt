@@ -3,8 +3,11 @@ package com.isradeleon.kmpappv2.presentation.coins
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.isradeleon.kmpappv2.common.Response
+import com.isradeleon.kmpappv2.common.utils.toStringResource
 import com.isradeleon.kmpappv2.domain.GetCoinsUseCase
 import com.isradeleon.kmpappv2.presentation.coins.CoinsListState
+import kmpappv2.composeapp.generated.resources.Res
+import kmpappv2.composeapp.generated.resources.error_unknown
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.onStart
@@ -35,17 +38,18 @@ class CoinsListViewModel(
 
     private suspend fun getCoinsList() {
         when(val coinsResponse = getCoinsUseCase.execute()) {
-            is Response.Fail -> {
-                _state.update {
-                    CoinsListState(
-                        error = null // TODO: Handle error message.
-                    )
-                }
-            }
             is Response.Success -> {
                 _state.update {
                     CoinsListState(
                         coins = coinsResponse.data
+                    )
+                }
+            }
+
+            is Response.Fail -> {
+                _state.update {
+                    CoinsListState(
+                        error = coinsResponse.error.toStringResource()
                     )
                 }
             }
