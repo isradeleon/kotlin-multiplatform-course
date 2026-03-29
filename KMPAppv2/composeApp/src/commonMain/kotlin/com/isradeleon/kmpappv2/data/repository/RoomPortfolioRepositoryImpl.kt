@@ -1,4 +1,4 @@
-package com.isradeleon.kmpappv2.data.local.impl
+package com.isradeleon.kmpappv2.data.repository
 
 import com.isradeleon.kmpappv2.data.local.dao.FavoriteDao
 import com.isradeleon.kmpappv2.data.mapper.toCoin
