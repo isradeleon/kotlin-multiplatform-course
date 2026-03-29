@@ -1,6 +1,6 @@
 package com.isradeleon.kmpappv2.common
 
-sealed interface FailureDetail: Failure {
+sealed interface FailureDetail {
     enum class Remote: FailureDetail {
         TIMEOUT,
         TOO_MANY_REQUESTS,

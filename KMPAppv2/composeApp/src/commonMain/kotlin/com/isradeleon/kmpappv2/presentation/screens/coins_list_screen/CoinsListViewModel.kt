@@ -2,7 +2,7 @@ package com.isradeleon.kmpappv2.presentation.screens.coins_list_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.isradeleon.kmpappv2.common.Response
+import com.isradeleon.kmpappv2.common.Outcome
 import com.isradeleon.kmpappv2.common.utils.toStringResource
 import com.isradeleon.kmpappv2.domain.use_cases.GetCoinsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,7 +35,7 @@ class CoinsListViewModel(
 
     private suspend fun getCoinsList() {
         when(val coinsResponse = getCoinsUseCase.execute()) {
-            is Response.Success -> {
+            is Outcome.Success -> {
                 _state.update {
                     CoinsListState(
                         coins = coinsResponse.data
@@ -43,7 +43,7 @@ class CoinsListViewModel(
                 }
             }
 
-            is Response.Fail -> {
+            is Outcome.Failure -> {
                 _state.update {
                     CoinsListState(
                         error = coinsResponse.error.toStringResource()

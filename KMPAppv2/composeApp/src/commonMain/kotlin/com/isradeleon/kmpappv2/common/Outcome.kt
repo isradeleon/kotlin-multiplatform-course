@@ -9,20 +9,20 @@ package com.isradeleon.kmpappv2.common
  * only produced and not consumed. This allows us to safely
  * substitute subtypes.
  */
-sealed interface Response<out D, out F: Failure> {
+sealed interface Outcome<out D, out F: FailureDetail> {
     /**
      * Successful result.
      * Nothing as the error type which represents a value that NEVER exists.
      * When we have a successful result, there's no erro to consider (Nothing).
      */
-    data class Success<out D>(val data: D): Response<D, Nothing>
+    data class Success<out D>(val data: D): Outcome<D, Nothing>
 
     /**
      * Failure result.
      * Similarly, we represent Nothing as the success data,
      * since here it doesn't exist.
      */
-    data class Fail<out F: Failure>(val error: F): Response<Nothing, F>
+    data class Failure<out F: FailureDetail>(val error: F): Outcome<Nothing, F>
 }
 
 /**
@@ -35,47 +35,47 @@ sealed interface Response<out D, out F: Failure> {
  * performance improvements, specially with lambdas &
  * high order functions.
  */
-inline fun <A, F: Failure, B> Response<A, F>.map(transform: (A) -> B): Response<B, F> {
+inline fun <A, F: FailureDetail, B> Outcome<A, F>.map(transform: (A) -> B): Outcome<B, F> {
     return when(this) {
-        is Response.Success -> Response.Success(transform(data))
-        is Response.Fail -> this
+        is Outcome.Success -> Outcome.Success(transform(data))
+        is Outcome.Failure -> this
     }
 }
 
 /**
  * Typealias for empty results.
  */
-typealias EmptyResult<F> = Response<Unit, F>
-fun <T, F: Failure> Response<T, F>.asEmptyResult(): EmptyResult<F> {
+typealias EmptyResult<F> = Outcome<Unit, F>
+fun <T, F: FailureDetail> Outcome<T, F>.asEmptyResult(): EmptyResult<F> {
     return map {}
 }
 
 /**
  * On success callback.
  */
-inline fun <T, F: Failure> Response<T,F>.onSuccess(
+inline fun <T, F: FailureDetail> Outcome<T,F>.onSuccess(
     action: (T) -> Unit
-): Response<T, F> {
+): Outcome<T, F> {
     return when(this) {
-        is Response.Success -> {
+        is Outcome.Success -> {
             action(data)
             this
         }
-        is Response.Fail -> this
+        is Outcome.Failure -> this
     }
 }
 
 /**
  * On fail callback.
  */
-inline fun <T, F: Failure> Response<T,F>.onFail(
+inline fun <T, F: FailureDetail> Outcome<T,F>.onFail(
     action: (F) -> Unit
-): Response<T, F> {
+): Outcome<T, F> {
     return when(this) {
-        is Response.Fail -> {
+        is Outcome.Failure -> {
             action(error)
             this
         }
-        is Response.Success -> this
+        is Outcome.Success -> this
     }
 }

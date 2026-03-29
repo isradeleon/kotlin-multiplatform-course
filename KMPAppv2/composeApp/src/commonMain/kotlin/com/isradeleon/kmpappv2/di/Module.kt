@@ -5,7 +5,7 @@ import com.isradeleon.kmpappv2.common.network.HttpClientFactory
 import com.isradeleon.kmpappv2.data.local.database.PortfolioDatabase
 import com.isradeleon.kmpappv2.data.local.database.getPortfolioDatabase
 import com.isradeleon.kmpappv2.data.remote.api.KtorCoinsRemoteDataSource
-import com.isradeleon.kmpappv2.data.remote.src.CoinsRemoteDataSource
+import com.isradeleon.kmpappv2.data.remote.sources.CoinsRemoteDataSource
 import com.isradeleon.kmpappv2.domain.use_cases.GetCoinDetailUseCase
 import com.isradeleon.kmpappv2.domain.use_cases.GetCoinsUseCase
 import com.isradeleon.kmpappv2.domain.use_cases.GetPriceHistoryUseCase
