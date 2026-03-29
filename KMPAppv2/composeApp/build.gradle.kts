@@ -79,6 +79,9 @@ kotlin {
             // Room & SQLite
             implementation(libs.room.runtime)
             implementation(libs.sqlite.bundled)
+
+            // Kotlin date time for multiplatform
+            implementation(libs.kotlin.date.time)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

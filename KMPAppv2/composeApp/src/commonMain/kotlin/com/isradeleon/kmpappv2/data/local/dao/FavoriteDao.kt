@@ -11,7 +11,7 @@ interface FavoriteDao {
     @Upsert
     suspend fun upsert(favoriteCoinEntity: FavoriteCoinEntity)
 
-    @Query("SELECT * FROM FavoriteCoinEntity")
+    @Query("SELECT * FROM FavoriteCoinEntity ORDER BY timestamp DESC")
     fun getAllFavoriteCoins(): Flow<List<FavoriteCoinEntity>>
 
     @Query("SELECT * FROM FavoriteCoinEntity WHERE id = :id")

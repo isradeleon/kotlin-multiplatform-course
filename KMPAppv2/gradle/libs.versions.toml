@@ -29,6 +29,9 @@ koin = "4.2.0"
 room = "2.8.4"
 sqlite = "2.6.2"
 
+# Kotlin date time (for multiplatform support)
+kotlin-date-time = "0.7.1"
+
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-testJunit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
@@ -77,6 +80,9 @@ koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", versi
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
+
+# Kotlin date time
+kotlin-date-time = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlin-date-time" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

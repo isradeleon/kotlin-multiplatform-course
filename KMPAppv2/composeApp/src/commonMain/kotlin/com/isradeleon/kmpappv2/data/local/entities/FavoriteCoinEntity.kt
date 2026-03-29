@@ -2,6 +2,7 @@ package com.isradeleon.kmpappv2.data.local.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlin.time.Clock
 
 @Entity
 data class FavoriteCoinEntity(
@@ -13,5 +14,6 @@ data class FavoriteCoinEntity(
     val color: String,
     val iconUrl: String,
     val price: Double,
-    val change: Double
+    val change: Double,
+    val timestamp: Long = Clock.System.now().toEpochMilliseconds()
 )
