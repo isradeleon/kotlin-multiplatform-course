@@ -15,7 +15,9 @@ fun App() {
     KMPAppV2Theme {
         Scaffold { padding ->
             FavoriteCoinsScreen(
-                modifier = Modifier.padding(padding)
+                modifier = Modifier.padding(padding),
+                onExploreCoinsClicked = {},
+                onCoinClicked = {}
             )
         }
     }

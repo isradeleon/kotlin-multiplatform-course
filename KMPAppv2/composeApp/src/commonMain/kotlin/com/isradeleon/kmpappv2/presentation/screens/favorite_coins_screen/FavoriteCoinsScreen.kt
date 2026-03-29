@@ -5,11 +5,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SwipeToDismissBox
@@ -24,11 +27,14 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.isradeleon.kmpappv2.domain.model.Coin
 import com.isradeleon.kmpappv2.presentation.screens.coins_list_screen.CoinListItem
+import com.isradeleon.kmpappv2.theme.LocalCoinRoutineColorsPalette
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun FavoriteCoinsScreen(
-    modifier: Modifier
+    modifier: Modifier,
+    onCoinClicked: (String) -> Unit,
+    onExploreCoinsClicked: () -> Unit
 ) {
     val favoriteCoinsViewModel = koinViewModel<FavoriteCoinsViewModel>()
     val coins by favoriteCoinsViewModel.observeFavoriteCoins()
@@ -38,9 +44,7 @@ fun FavoriteCoinsScreen(
         FavoriteCoinsContent(
             modifier = modifier,
             coins = coins,
-            onCoinClicked = {
-
-            },
+            onCoinClicked = onCoinClicked,
             onDismissCoin = { id ->
                 favoriteCoinsViewModel.removeFavoriteCoin(id)
             }
@@ -48,9 +52,7 @@ fun FavoriteCoinsScreen(
     else
         EmptyFavoriteCoinsContent(
             modifier = modifier,
-            onExploreCoinsClicked = {
-
-            }
+            onExploreCoinsClicked = onExploreCoinsClicked
         )
 }
 
@@ -65,12 +67,25 @@ private fun EmptyFavoriteCoinsContent(
             .background(MaterialTheme.colorScheme.background),
         contentAlignment = Alignment.Center
     ) {
-        Column {
-            Text("No favorite coins")
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                "No favorite coins found",
+                style = MaterialTheme.typography.titleLarge
+            )
+            Spacer(modifier = Modifier.height(16.dp))
             Button(
-                onClick = onExploreCoinsClicked
+                onClick = onExploreCoinsClicked,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = LocalCoinRoutineColorsPalette.current.profitGreen
+                )
             ) {
-                Text("Explore coins")
+                Text(
+                    text = "Explore coins",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
             }
         }
     }

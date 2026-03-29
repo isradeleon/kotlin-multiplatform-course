@@ -51,7 +51,7 @@ fun CoinsListScreen(
 }
 
 @Composable
-fun CoinsListContent(
+private fun CoinsListContent(
     modifier: Modifier,
     state: CoinsListState,
     onCoinClicked: (String) -> Unit
@@ -69,7 +69,7 @@ fun CoinsListContent(
 }
 
 @Composable
-fun CoinsList(
+private fun CoinsList(
     coins: List<Coin>,
     onCoinClicked: (String) -> Unit
 ) {
