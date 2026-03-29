@@ -1,4 +1,4 @@
-package com.isradeleon.kmpappv2.domain
+package com.isradeleon.kmpappv2.domain.use_cases
 
 import com.isradeleon.kmpappv2.common.FailureDetail
 import com.isradeleon.kmpappv2.common.Response

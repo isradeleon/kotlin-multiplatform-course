@@ -6,9 +6,9 @@ import com.isradeleon.kmpappv2.data.local.database.PortfolioDatabase
 import com.isradeleon.kmpappv2.data.local.database.getPortfolioDatabase
 import com.isradeleon.kmpappv2.data.remote.api.KtorCoinsRemoteDataSource
 import com.isradeleon.kmpappv2.data.remote.src.CoinsRemoteDataSource
-import com.isradeleon.kmpappv2.domain.GetCoinDetailUseCase
-import com.isradeleon.kmpappv2.domain.GetCoinsUseCase
-import com.isradeleon.kmpappv2.domain.GetPriceHistoryUseCase
+import com.isradeleon.kmpappv2.domain.use_cases.GetCoinDetailUseCase
+import com.isradeleon.kmpappv2.domain.use_cases.GetCoinsUseCase
+import com.isradeleon.kmpappv2.domain.use_cases.GetPriceHistoryUseCase
 import com.isradeleon.kmpappv2.presentation.coins_list_screen.CoinsListViewModel
 import io.ktor.client.HttpClient
 import org.koin.core.context.startKoin
