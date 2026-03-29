@@ -9,7 +9,7 @@ import com.isradeleon.kmpappv2.data.remote.src.CoinsRemoteDataSource
 import com.isradeleon.kmpappv2.domain.use_cases.GetCoinDetailUseCase
 import com.isradeleon.kmpappv2.domain.use_cases.GetCoinsUseCase
 import com.isradeleon.kmpappv2.domain.use_cases.GetPriceHistoryUseCase
-import com.isradeleon.kmpappv2.presentation.coins_list_screen.CoinsListViewModel
+import com.isradeleon.kmpappv2.presentation.screens.coins_list_screen.CoinsListViewModel
 import io.ktor.client.HttpClient
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module

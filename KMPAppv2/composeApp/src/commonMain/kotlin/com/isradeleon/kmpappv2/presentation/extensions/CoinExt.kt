@@ -1,4 +1,4 @@
-package com.isradeleon.kmpappv2.presentation.ext
+package com.isradeleon.kmpappv2.presentation.extensions
 
 import com.isradeleon.kmpappv2.domain.model.Coin
 

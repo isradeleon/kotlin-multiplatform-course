@@ -1,4 +1,4 @@
-package com.isradeleon.kmpappv2.presentation.coins_list_screen
+package com.isradeleon.kmpappv2.presentation.screens.coins_list_screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -31,7 +31,7 @@ import coil3.compose.AsyncImage
 import com.isradeleon.kmpappv2.common.utils.formatFiatCurrency
 import com.isradeleon.kmpappv2.common.utils.formatPercentage
 import com.isradeleon.kmpappv2.domain.model.Coin
-import com.isradeleon.kmpappv2.presentation.ext.isPositiveChange
+import com.isradeleon.kmpappv2.presentation.extensions.isPositiveChange
 import com.isradeleon.kmpappv2.theme.LocalCoinRoutineColorsPalette
 import org.koin.compose.viewmodel.koinViewModel
 

@@ -1,4 +1,4 @@
-package com.isradeleon.kmpappv2.presentation.coins_list_screen
+package com.isradeleon.kmpappv2.presentation.screens.coins_list_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

@@ -1,4 +1,4 @@
-package com.isradeleon.kmpappv2.presentation.coin_details_screen
+package com.isradeleon.kmpappv2.presentation.screens.coin_details_screen
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxWidth
