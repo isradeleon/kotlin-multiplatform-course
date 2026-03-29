@@ -2,9 +2,9 @@ package com.isradeleon.kmpappv2.data.remote.sources
 
 import com.isradeleon.kmpappv2.common.FailureDetail
 import com.isradeleon.kmpappv2.common.Outcome
-import com.isradeleon.kmpappv2.data.remote.dto.CoinDetailResponseDto
-import com.isradeleon.kmpappv2.data.remote.dto.CoinPriceHistoryResponseDto
-import com.isradeleon.kmpappv2.data.remote.dto.CoinsResponseDto
+import com.isradeleon.kmpappv2.data.remote.dtos.CoinDetailResponseDto
+import com.isradeleon.kmpappv2.data.remote.dtos.CoinPriceHistoryResponseDto
+import com.isradeleon.kmpappv2.data.remote.dtos.CoinsResponseDto
 
 interface CoinsRemoteDataSource {
     suspend fun getCoins():

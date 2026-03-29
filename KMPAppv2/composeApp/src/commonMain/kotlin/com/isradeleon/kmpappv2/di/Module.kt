@@ -4,7 +4,7 @@ import androidx.room.RoomDatabase
 import com.isradeleon.kmpappv2.common.network.HttpClientFactory
 import com.isradeleon.kmpappv2.data.local.database.PortfolioDatabase
 import com.isradeleon.kmpappv2.data.local.database.getPortfolioDatabase
-import com.isradeleon.kmpappv2.data.remote.api.KtorCoinsRemoteDataSource
+import com.isradeleon.kmpappv2.common.network.api.CoinRankingRemoteDataSource
 import com.isradeleon.kmpappv2.data.remote.sources.CoinsRemoteDataSource
 import com.isradeleon.kmpappv2.domain.use_cases.GetCoinDetailUseCase
 import com.isradeleon.kmpappv2.domain.use_cases.GetCoinsUseCase
@@ -76,7 +76,7 @@ val sharedModule = module {
     /**
      * Data sources
      */
-    single<CoinsRemoteDataSource> { KtorCoinsRemoteDataSource(get()) }
+    single<CoinsRemoteDataSource> { CoinRankingRemoteDataSource(get()) }
 
     /**
      * Database

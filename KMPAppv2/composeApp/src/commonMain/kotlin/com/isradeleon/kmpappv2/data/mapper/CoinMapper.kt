@@ -1,8 +1,8 @@
 package com.isradeleon.kmpappv2.data.mapper
 
 import com.isradeleon.kmpappv2.data.local.entities.FavoriteCoinEntity
-import com.isradeleon.kmpappv2.data.remote.dto.CoinDto
-import com.isradeleon.kmpappv2.data.remote.dto.CoinPriceDto
+import com.isradeleon.kmpappv2.data.remote.dtos.CoinDto
+import com.isradeleon.kmpappv2.data.remote.dtos.CoinPriceDto
 import com.isradeleon.kmpappv2.domain.model.Coin
 import com.isradeleon.kmpappv2.domain.model.PriceHistoryItem
 

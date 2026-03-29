@@ -1,4 +1,4 @@
-package com.isradeleon.kmpappv2.data.remote.dto
+package com.isradeleon.kmpappv2.data.remote.dtos
 
 import kotlinx.serialization.Serializable
 

@@ -1,18 +1,18 @@
-package com.isradeleon.kmpappv2.data.remote.api
+package com.isradeleon.kmpappv2.common.network.api
 
 import com.isradeleon.kmpappv2.common.FailureDetail
 import com.isradeleon.kmpappv2.common.Outcome
 import com.isradeleon.kmpappv2.common.network.safeCall
 import com.isradeleon.kmpappv2.data.remote.sources.CoinsRemoteDataSource
-import com.isradeleon.kmpappv2.data.remote.dto.CoinDetailResponseDto
-import com.isradeleon.kmpappv2.data.remote.dto.CoinPriceHistoryResponseDto
-import com.isradeleon.kmpappv2.data.remote.dto.CoinsResponseDto
+import com.isradeleon.kmpappv2.data.remote.dtos.CoinDetailResponseDto
+import com.isradeleon.kmpappv2.data.remote.dtos.CoinPriceHistoryResponseDto
+import com.isradeleon.kmpappv2.data.remote.dtos.CoinsResponseDto
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 
 private const val BASE_URL = "https://api.coinranking.com/v2"
 
-class KtorCoinsRemoteDataSource(
+class CoinRankingRemoteDataSource(
     private val client: HttpClient
 ): CoinsRemoteDataSource {
     override suspend fun getCoins(): Outcome<CoinsResponseDto, FailureDetail.Remote> {
