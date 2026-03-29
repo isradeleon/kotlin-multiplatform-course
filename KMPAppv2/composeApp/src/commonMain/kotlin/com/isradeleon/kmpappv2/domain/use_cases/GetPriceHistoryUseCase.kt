@@ -2,19 +2,13 @@ package com.isradeleon.kmpappv2.domain.use_cases
 
 import com.isradeleon.kmpappv2.common.FailureDetail
 import com.isradeleon.kmpappv2.common.Outcome
-import com.isradeleon.kmpappv2.common.map
-import com.isradeleon.kmpappv2.data.mapper.toPriceHistoryItem
-import com.isradeleon.kmpappv2.data.remote.sources.CoinsRemoteDataSource
 import com.isradeleon.kmpappv2.domain.model.PriceHistoryItem
+import com.isradeleon.kmpappv2.domain.repository.CoinsRepository
 
 class GetPriceHistoryUseCase(
-    private val source: CoinsRemoteDataSource
+    private val repository: CoinsRepository
 ) {
-    suspend fun execute(id: String): Outcome<List<PriceHistoryItem>, FailureDetail.Remote> {
-        return source.getPriceHistory(id).map { response ->
-            response.data.history.map {
-                it.toPriceHistoryItem()
-            }
-        }
+    suspend fun execute(id: String): Outcome<List<PriceHistoryItem>, FailureDetail> {
+        return repository.getPriceHistory(id)
     }
 }
