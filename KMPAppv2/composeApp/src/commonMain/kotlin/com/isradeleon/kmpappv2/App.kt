@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.isradeleon.kmpappv2.presentation.screens.coins_list_screen.CoinsListScreen
+import com.isradeleon.kmpappv2.presentation.screens.favorite_coins_screen.FavoriteCoinsScreen
 import com.isradeleon.kmpappv2.theme.KMPAppV2Theme
 
 @Composable
@@ -13,11 +14,9 @@ import com.isradeleon.kmpappv2.theme.KMPAppV2Theme
 fun App() {
     KMPAppV2Theme {
         Scaffold { padding ->
-            CoinsListScreen(
+            FavoriteCoinsScreen(
                 modifier = Modifier.padding(padding)
-            ) {
-
-            }
+            )
         }
     }
 }

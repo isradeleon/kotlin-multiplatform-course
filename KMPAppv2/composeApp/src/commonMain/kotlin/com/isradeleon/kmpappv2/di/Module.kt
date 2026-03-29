@@ -5,11 +5,20 @@ import com.isradeleon.kmpappv2.common.network.HttpClientFactory
 import com.isradeleon.kmpappv2.data.local.database.PortfolioDatabase
 import com.isradeleon.kmpappv2.data.local.database.getPortfolioDatabase
 import com.isradeleon.kmpappv2.common.network.api.CoinRankingRemoteDataSource
+import com.isradeleon.kmpappv2.data.local.dao.FavoriteDao
 import com.isradeleon.kmpappv2.data.remote.sources.CoinsRemoteDataSource
+import com.isradeleon.kmpappv2.data.repository.CoinsRepositoryImpl
+import com.isradeleon.kmpappv2.data.repository.PortfolioRepositoryImpl
+import com.isradeleon.kmpappv2.domain.repository.CoinsRepository
+import com.isradeleon.kmpappv2.domain.repository.PortfolioRepository
+import com.isradeleon.kmpappv2.domain.use_cases.AddToFavoritesUseCase
 import com.isradeleon.kmpappv2.domain.use_cases.GetCoinDetailUseCase
 import com.isradeleon.kmpappv2.domain.use_cases.GetCoinsUseCase
 import com.isradeleon.kmpappv2.domain.use_cases.GetPriceHistoryUseCase
+import com.isradeleon.kmpappv2.domain.use_cases.ObserveFavoritesUseCase
+import com.isradeleon.kmpappv2.domain.use_cases.RemoveFavoriteUseCase
 import com.isradeleon.kmpappv2.presentation.screens.coins_list_screen.CoinsListViewModel
+import com.isradeleon.kmpappv2.presentation.screens.favorite_coins_screen.FavoriteCoinsViewModel
 import io.ktor.client.HttpClient
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
@@ -44,6 +53,51 @@ expect val platformModule: Module
  */
 val sharedModule = module {
     /**
+     * ViewModels
+     */
+    viewModel { CoinsListViewModel(get()) }
+    viewModel {
+        FavoriteCoinsViewModel(
+        get(), get()
+        )
+    }
+
+    /**
+     * Use cases
+     */
+    factory { GetCoinsUseCase(get()) }
+    factory { GetCoinDetailUseCase(get()) }
+    factory { GetPriceHistoryUseCase(get()) }
+    factory { ObserveFavoritesUseCase(get()) }
+    factory { RemoveFavoriteUseCase(get()) }
+    factory { AddToFavoritesUseCase(get()) }
+
+    /**
+     * Repositories
+     */
+    single<PortfolioRepository> { PortfolioRepositoryImpl(get()) }
+    single<CoinsRepository> { CoinsRepositoryImpl(get()) }
+
+    /**
+     * Data sources
+     */
+    single<CoinsRemoteDataSource> { CoinRankingRemoteDataSource(get()) }
+
+    /**
+     * DAO's
+     */
+    single<FavoriteDao> { get<PortfolioDatabase>().favoriteDao() }
+
+    /**
+     * Database
+     */
+    single<PortfolioDatabase> {
+        getPortfolioDatabase(
+            get<RoomDatabase.Builder<PortfolioDatabase>>()
+        )
+    }
+
+    /**
      * SINGLE comes from Koin library.
      * It specifies a SINGLETON instance being injected.
      */
@@ -59,31 +113,5 @@ val sharedModule = module {
          * androidMain & iosMain (NOT the iosApp, which is the Xcode project).
          */
         HttpClientFactory.create(get())
-    }
-
-    /**
-     * ViewModels
-     */
-    viewModel { CoinsListViewModel(get()) }
-
-    /**
-     * Use cases
-     */
-    factory { GetCoinsUseCase(get()) }
-    factory { GetCoinDetailUseCase(get()) }
-    factory { GetPriceHistoryUseCase(get()) }
-
-    /**
-     * Data sources
-     */
-    single<CoinsRemoteDataSource> { CoinRankingRemoteDataSource(get()) }
-
-    /**
-     * Database
-     */
-    single<PortfolioDatabase> {
-        getPortfolioDatabase(
-            get<RoomDatabase.Builder<PortfolioDatabase>>()
-        )
     }
 }

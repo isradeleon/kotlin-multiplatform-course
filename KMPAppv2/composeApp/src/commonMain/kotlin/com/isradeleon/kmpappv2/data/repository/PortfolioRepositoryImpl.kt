@@ -8,7 +8,7 @@ import com.isradeleon.kmpappv2.domain.repository.PortfolioRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class RoomPortfolioRepositoryImpl(
+class PortfolioRepositoryImpl(
     private val favoriteDao: FavoriteDao
 ): PortfolioRepository {
     override fun observeFavoriteCoins(): Flow<List<Coin>> {

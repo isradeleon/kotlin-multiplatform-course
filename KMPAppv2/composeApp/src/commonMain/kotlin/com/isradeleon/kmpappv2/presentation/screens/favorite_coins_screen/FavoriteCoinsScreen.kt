@@ -55,7 +55,7 @@ fun FavoriteCoinsScreen(
 }
 
 @Composable
-fun EmptyFavoriteCoinsContent(
+private fun EmptyFavoriteCoinsContent(
     modifier: Modifier,
     onExploreCoinsClicked: () -> Unit
 ) {
@@ -77,7 +77,7 @@ fun EmptyFavoriteCoinsContent(
 }
 
 @Composable
-fun FavoriteCoinsContent(
+private fun FavoriteCoinsContent(
     modifier: Modifier,
     coins: List<Coin>,
     onCoinClicked: (String) -> Unit,
@@ -97,7 +97,7 @@ fun FavoriteCoinsContent(
 }
 
 @Composable
-fun FavoriteCoinsList(
+private fun FavoriteCoinsList(
     coins: List<Coin>,
     onCoinClicked: (String) -> Unit,
     onDismissCoin: (String) -> Unit
@@ -125,7 +125,7 @@ fun FavoriteCoinsList(
 }
 
 @Composable
-fun FavoriteCoinItem(
+private fun FavoriteCoinItem(
     coin: Coin,
     onCoinClicked: (String) -> Unit,
     onDismiss: () -> Unit
