@@ -30,9 +30,8 @@ fun FavoriteCoinsScreen(
     modifier: Modifier
 ) {
     val favoriteCoinsViewModel = koinViewModel<FavoriteCoinsViewModel>()
-    val coins by favoriteCoinsViewModel.observeFavoriteCoins().collectAsStateWithLifecycle(
-        initialValue = emptyList()
-    )
+    val coins by favoriteCoinsViewModel.observeFavoriteCoins()
+        .collectAsStateWithLifecycle(initialValue = emptyList())
 
     FavoriteCoinsContent(
         modifier = modifier,
@@ -40,8 +39,8 @@ fun FavoriteCoinsScreen(
         onCoinClicked = {
 
         },
-        onDismissCoin = {
-            
+        onDismissCoin = { id ->
+            favoriteCoinsViewModel.removeFavoriteCoin(id)
         }
     )
 }
