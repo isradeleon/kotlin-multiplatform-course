@@ -3,17 +3,14 @@ package com.isradeleon.kmpappv2.data.local.database
 import androidx.room.ConstructedBy
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.isradeleon.kmpappv2.data.local.dao.PortfolioDao
-import com.isradeleon.kmpappv2.data.local.dao.UserBalanceDao
-import com.isradeleon.kmpappv2.data.local.entities.PortfolioCoinEntity
-import com.isradeleon.kmpappv2.data.local.entities.UserBalanceEntity
+import com.isradeleon.kmpappv2.data.local.dao.FavoriteDao
+import com.isradeleon.kmpappv2.data.local.entities.FavoriteCoinEntity
 
 @Database(
     entities = [
-        PortfolioCoinEntity::class,
-        UserBalanceEntity::class
+        FavoriteCoinEntity::class
     ],
-    version = 2
+    version = 3
 )
 @ConstructedBy(PortfolioDatabaseConstructor::class)
 abstract class PortfolioDatabase: RoomDatabase() {
@@ -24,6 +21,5 @@ abstract class PortfolioDatabase: RoomDatabase() {
     /**
      * DAOs
      */
-    abstract fun portfolioDao(): PortfolioDao
-    abstract fun userBalanceDao(): UserBalanceDao
+    abstract fun favoriteDao(): FavoriteDao
 }

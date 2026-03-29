@@ -4,13 +4,14 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class PortfolioCoinEntity(
+data class FavoriteCoinEntity(
     @PrimaryKey
     val id: String,
-    val name: String,
+    val rank: Int,
     val symbol: String,
+    val name: String,
+    val color: String,
     val iconUrl: String,
-    val avgPurchasePrice: Double,
-    val amountOwned: Double,
-    val timestamp: Long
+    val price: Double,
+    val change: Double
 )
