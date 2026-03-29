@@ -3,20 +3,21 @@ package com.isradeleon.kmpappv2.presentation.screens.favorite_coins_screen
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -33,16 +34,46 @@ fun FavoriteCoinsScreen(
     val coins by favoriteCoinsViewModel.observeFavoriteCoins()
         .collectAsStateWithLifecycle(initialValue = emptyList())
 
-    FavoriteCoinsContent(
-        modifier = modifier,
-        coins = coins,
-        onCoinClicked = {
+    if (coins.isNotEmpty())
+        FavoriteCoinsContent(
+            modifier = modifier,
+            coins = coins,
+            onCoinClicked = {
 
-        },
-        onDismissCoin = { id ->
-            favoriteCoinsViewModel.removeFavoriteCoin(id)
+            },
+            onDismissCoin = { id ->
+                favoriteCoinsViewModel.removeFavoriteCoin(id)
+            }
+        )
+    else
+        EmptyFavoriteCoinsContent(
+            modifier = modifier,
+            onExploreCoinsClicked = {
+
+            }
+        )
+}
+
+@Composable
+fun EmptyFavoriteCoinsContent(
+    modifier: Modifier,
+    onExploreCoinsClicked: () -> Unit
+) {
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background),
+        contentAlignment = Alignment.Center
+    ) {
+        Column {
+            Text("No favorite coins")
+            Button(
+                onClick = onExploreCoinsClicked
+            ) {
+                Text("Explore coins")
+            }
         }
-    )
+    }
 }
 
 @Composable
