@@ -82,6 +82,9 @@ kotlin {
 
             // Kotlin date time for multiplatform
             implementation(libs.kotlin.date.time)
+
+            // Material icons
+            implementation(libs.material.icons.extended)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

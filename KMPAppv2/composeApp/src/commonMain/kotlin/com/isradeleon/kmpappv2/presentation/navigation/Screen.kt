@@ -1,17 +1,22 @@
 package com.isradeleon.kmpappv2.presentation.navigation
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material.icons.outlined.QueryStats
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.toRoute
-import kmpappv2.composeapp.generated.resources.Res
-import kmpappv2.composeapp.generated.resources.favorite_24dp
-import kmpappv2.composeapp.generated.resources.query_stats_24dp
 import kotlinx.serialization.Serializable
-import org.jetbrains.compose.resources.DrawableResource
 
 @Serializable
 sealed class Screen(
     val title: String
 ) {
+    @Serializable
+    object Home: Screen(
+        title = "Home"
+    )
+
     @Serializable
     object CoinsListTab: Screen(
         title = "Market"
@@ -49,11 +54,12 @@ sealed class Screen(
     }
 }
 
-fun Screen.toNavigationIcon(): DrawableResource {
+fun Screen.toNavigationIcon(): ImageVector {
     return when (this) {
-        Screen.CoinDetails -> Res.drawable.favorite_24dp
-        Screen.FavoriteCoinsTab -> Res.drawable.favorite_24dp
-        Screen.CoinsListTab -> Res.drawable.query_stats_24dp
+        Screen.Home -> Icons.Outlined.Favorite
+        Screen.FavoriteCoinsTab -> Icons.Outlined.Favorite
+        Screen.CoinsListTab -> Icons.Outlined.QueryStats
+        Screen.CoinDetails -> Icons.Outlined.Favorite
     }
 }
 
