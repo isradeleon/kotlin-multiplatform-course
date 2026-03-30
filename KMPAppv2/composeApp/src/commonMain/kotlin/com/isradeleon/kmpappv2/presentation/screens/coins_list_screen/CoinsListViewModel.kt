@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 class CoinsListViewModel(
     private val getCoinsUseCase: GetCoinsUseCase
@@ -18,9 +19,7 @@ class CoinsListViewModel(
     private val _state = MutableStateFlow(CoinsListState())
     val state = _state
         // Replacement for the init VM function
-        .onStart { // Called when someone begins collecting the state flow.
-            getCoinsList()
-        }.stateIn( // Converts the flow into a state flow, viewModel-scoped.
+        .stateIn( // Converts the flow into a state flow, viewModel-scoped.
             scope = viewModelScope,
             /**
              * This indicates that after the last subscriber stops collecting,
@@ -33,7 +32,7 @@ class CoinsListViewModel(
             initialValue = CoinsListState()
         )
 
-    private suspend fun getCoinsList() {
+    suspend fun getCoinsList() {
         when(val coinsResponse = getCoinsUseCase.execute()) {
             is Outcome.Success -> {
                 _state.update {
