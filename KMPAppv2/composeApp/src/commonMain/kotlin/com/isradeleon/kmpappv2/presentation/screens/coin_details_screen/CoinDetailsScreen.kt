@@ -54,7 +54,8 @@ fun CoinDetailsScreen(
         }
     else if (state.error != null)
         Box(
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxSize()
         ) {
             Text(
                 text = stringResource(state.error!!),
