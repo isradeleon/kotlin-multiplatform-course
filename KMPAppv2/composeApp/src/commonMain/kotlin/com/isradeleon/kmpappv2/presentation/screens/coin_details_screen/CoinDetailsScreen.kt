@@ -1,13 +1,33 @@
 package com.isradeleon.kmpappv2.presentation.screens.coin_details_screen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil3.compose.AsyncImage
+import com.isradeleon.kmpappv2.domain.model.Coin
+import com.isradeleon.kmpappv2.domain.model.PriceHistoryItem
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -20,12 +40,56 @@ fun CoinDetailsScreen(
     }
     val state by coinDetailsViewModel.state.collectAsStateWithLifecycle()
 
-    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text("Here will be the details")
-    }
+    if (state.isLoading)
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            CircularProgressIndicator()
+        }
+    else if (state.error != null)
+        Box(
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = stringResource(state.error!!),
+                modifier = Modifier.padding(32.dp).fillMaxWidth(),
+                color = MaterialTheme.colorScheme.error,
+                textAlign = TextAlign.Center
+            )
+        }
+    else if (state.coin != null)
+        CoinDetailsContent(
+            coin = state.coin!!,
+            priceHistory = state.priceHistory
+        )
 }
 
 @Composable
-fun CoinDetailsContent() {
-
+private fun CoinDetailsContent(
+    coin: Coin,
+    priceHistory: List<PriceHistoryItem>
+) {
+    Box(
+        modifier = Modifier.fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+    ) {
+        Column(Modifier.padding(16.dp)) {
+            Row {
+                AsyncImage(
+                    model = coin.iconUrl,
+                    contentDescription = "${coin.name} icon",
+                    contentScale = ContentScale.Fit,
+                    modifier = Modifier.padding(4.dp)
+                        .clip(CircleShape)
+                        .size(80.dp)
+                )
+                Spacer(Modifier.width(16.dp))
+                PerformanceChart(
+                    modifier = Modifier.height(200.dp),
+                    nodes = priceHistory.map { it.price }
+                )
+            }
+        }
+    }
 }

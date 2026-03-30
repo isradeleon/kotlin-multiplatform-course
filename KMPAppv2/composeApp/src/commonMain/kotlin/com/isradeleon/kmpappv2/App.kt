@@ -18,7 +18,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.isradeleon.kmpappv2.presentation.navigation.Navigator
+import androidx.navigation.toRoute
 import com.isradeleon.kmpappv2.presentation.navigation.Screen
 import com.isradeleon.kmpappv2.presentation.navigation.components.MyBottomNavbar
 import com.isradeleon.kmpappv2.presentation.navigation.components.MyTopAppBar
@@ -57,13 +57,18 @@ fun App() {
                 composable<Screen.Home> {
                     HomeScreen(
                         selectedBottomTab = selectedBottomTab,
-                        onCoinClicked = {
-                            navController.navigate(Screen.CoinDetails)
+                        onCoinClicked = { coinId ->
+                            navController.navigate(
+                                Screen.CoinDetails(
+                                    coinId = coinId
+                                )
+                            )
                         },
                     )
                 }
                 composable<Screen.CoinDetails> { backStackEntry ->
-                    CoinDetailsScreen()
+                    val coinId = backStackEntry.toRoute<Screen.CoinDetails>().coinId
+                    CoinDetailsScreen(coinId)
                 }
             }
         }
@@ -117,72 +122,6 @@ private fun HomeScreen(
                     onCoinClicked = onCoinClicked
                 )
                 else -> {}
-            }
-        }
-    }
-}
-
-/**
- * Previous impl with the Navigator class.
- * Keep for reference & future possible implementations.
- */
-@Composable
-private fun AppContent(
-    modifier: Modifier,
-    navigator: Navigator
-) {
-    val parentNavController = rememberNavController()
-    navigator.setParentNavController(parentNavController)
-
-    NavHost(
-        modifier = modifier.fillMaxSize(),
-        navController = parentNavController,
-        //enterTransition = { fadeIn(animationSpec = tween(200)) },
-        //exitTransition = { fadeOut(animationSpec = tween(200)) },
-        startDestination = Screen.FavoriteCoinsTab,
-    ) {
-        composable<Screen.FavoriteCoinsTab> {
-            val mainNestedNavController = rememberNavController()
-            navigator.setNestedNavController(mainNestedNavController)
-
-            NavHost(
-                navController = mainNestedNavController,
-                startDestination = Screen.FavoriteCoinsTab
-            ) {
-                composable<Screen.FavoriteCoinsTab> {
-                    FavoriteCoinsScreen(
-                        onCoinClicked = {
-                            navigator.navigate(Screen.CoinDetails)
-                        },
-                        onExploreCoinsClicked = {
-                            navigator.navigateToTab(Screen.CoinsListTab)
-                        }
-                    )
-                }
-                composable<Screen.CoinDetails> { backStackEntry ->
-                    CoinDetailsScreen()
-                }
-            }
-        }
-
-        composable<Screen.CoinsListTab> {
-            val marketNestedNavController = rememberNavController()
-            navigator.setNestedNavController(marketNestedNavController)
-
-            NavHost(
-                navController = marketNestedNavController,
-                startDestination = Screen.CoinsListTab
-            ) {
-                composable<Screen.CoinsListTab> {
-                    CoinsListScreen(
-                        onCoinClicked = {
-                            navigator.navigate(Screen.CoinDetails)
-                        }
-                    )
-                }
-                composable<Screen.CoinDetails> { backStackEntry ->
-                    CoinDetailsScreen()
-                }
             }
         }
     }

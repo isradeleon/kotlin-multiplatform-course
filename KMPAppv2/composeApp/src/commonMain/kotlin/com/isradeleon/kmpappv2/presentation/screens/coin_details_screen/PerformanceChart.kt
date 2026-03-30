@@ -24,7 +24,7 @@ fun PerformanceChart(
             LocalCoinRoutineColorsPalette.current.lossRed
 
     Canvas(
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth()
     ) {
         /**
          * The path object represents drawing commands.

@@ -28,8 +28,10 @@ sealed class Screen(
     )
 
     @Serializable
-    object CoinDetails: Screen(
-        title = "Coin Details"
+    data class CoinDetails(
+        val coinId: String
+    ): Screen(
+        title = "Coin Details",
     )
 
     companion object {
@@ -59,7 +61,7 @@ fun Screen.toNavigationIcon(): ImageVector {
         Screen.Home -> Icons.Outlined.Favorite
         Screen.FavoriteCoinsTab -> Icons.Outlined.Favorite
         Screen.CoinsListTab -> Icons.Outlined.QueryStats
-        Screen.CoinDetails -> Icons.Outlined.Favorite
+        is Screen.CoinDetails -> Icons.Outlined.Favorite
     }
 }
 
