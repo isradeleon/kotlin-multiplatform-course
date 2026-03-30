@@ -48,7 +48,9 @@ fun App() {
             }
         ) { padding ->
             NavHost(
-                modifier = Modifier.padding(padding),
+                modifier = Modifier.padding(
+                    top = padding.calculateTopPadding()
+                ),
                 navController = navController,
                 startDestination = Screen.Home,
             ) {
@@ -77,7 +79,7 @@ private fun HomeScreen(
     val bottomTabs = listOf(Screen.FavoriteCoinsTab, Screen.CoinsListTab)
     val pagerState = rememberPagerState(
         initialPage = 0,
-        pageCount = { 2 },
+        pageCount = { 2 }
     )
 
     Scaffold(
@@ -105,6 +107,7 @@ private fun HomeScreen(
                 0 -> FavoriteCoinsScreen(
                     onCoinClicked = onCoinClicked,
                     onExploreCoinsClicked = {
+                        selectedBottomTab.value = 1
                         scope.launch {
                             pagerState.animateScrollToPage(1)
                         }
