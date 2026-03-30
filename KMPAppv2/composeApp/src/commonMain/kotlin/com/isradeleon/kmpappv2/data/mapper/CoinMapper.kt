@@ -22,7 +22,7 @@ fun CoinDto.toCoin(): Coin {
 fun CoinPriceDto.toPriceHistoryItem(): PriceHistoryItem {
     return PriceHistoryItem(
         price = price ?: 0.0,
-        timestamp = timestamp
+        timestamp = timestamp ?: 0
     )
 }
 
