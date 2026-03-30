@@ -10,7 +10,7 @@ import com.isradeleon.kmpappv2.data.local.entities.FavoriteCoinEntity
     entities = [
         FavoriteCoinEntity::class
     ],
-    version = 4
+    version = 5
 )
 @ConstructedBy(PortfolioDatabaseConstructor::class)
 abstract class PortfolioDatabase: RoomDatabase() {

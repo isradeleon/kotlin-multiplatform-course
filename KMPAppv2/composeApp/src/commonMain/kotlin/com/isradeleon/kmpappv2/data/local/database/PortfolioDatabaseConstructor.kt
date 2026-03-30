@@ -29,5 +29,7 @@ fun getPortfolioDatabase(
          */
         .setDriver(BundledSQLiteDriver())
         .setQueryCoroutineContext(Dispatchers.IO)
+        // Temporary workaround for database changes.
+        .fallbackToDestructiveMigration(true)
         .build()
 }

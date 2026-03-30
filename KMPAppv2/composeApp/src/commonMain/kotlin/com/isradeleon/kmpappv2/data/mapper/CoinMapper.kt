@@ -13,7 +13,6 @@ fun CoinDto.toCoin(): Coin {
         symbol = symbol,
         name = name,
         description = description,
-        color = color,
         iconUrl = iconUrl,
         price = price,
         change = change
@@ -34,7 +33,6 @@ fun FavoriteCoinEntity.toCoin(): Coin {
         symbol = symbol,
         name = name,
         description = "",
-        color = color,
         iconUrl = iconUrl,
         price = price,
         change = change
@@ -47,7 +45,6 @@ fun Coin.toFavoriteCoinEntity(): FavoriteCoinEntity {
         rank = rank,
         symbol = symbol,
         name = name,
-        color = color,
         iconUrl = iconUrl,
         price = price,
         change = change

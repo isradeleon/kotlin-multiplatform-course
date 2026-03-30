@@ -19,7 +19,6 @@ data class CoinDto(
     val symbol: String,
     val name: String,
     val description: String? = null,
-    val color: String,
     val iconUrl: String,
     /**
      * Consider using BigDecimal in real world apps.

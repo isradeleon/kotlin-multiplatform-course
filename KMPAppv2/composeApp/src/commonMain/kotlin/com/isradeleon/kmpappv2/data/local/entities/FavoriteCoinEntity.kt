@@ -11,7 +11,6 @@ data class FavoriteCoinEntity(
     val rank: Int,
     val symbol: String,
     val name: String,
-    val color: String,
     val iconUrl: String,
     val price: Double,
     val change: Double,
