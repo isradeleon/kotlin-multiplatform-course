@@ -17,6 +17,7 @@ import com.isradeleon.kmpappv2.domain.use_cases.GetCoinsUseCase
 import com.isradeleon.kmpappv2.domain.use_cases.GetPriceHistoryUseCase
 import com.isradeleon.kmpappv2.domain.use_cases.ObserveFavoritesUseCase
 import com.isradeleon.kmpappv2.domain.use_cases.RemoveFavoriteUseCase
+import com.isradeleon.kmpappv2.presentation.screens.coin_details_screen.CoinDetailsViewModel
 import com.isradeleon.kmpappv2.presentation.screens.coins_list_screen.CoinsListViewModel
 import com.isradeleon.kmpappv2.presentation.screens.favorite_coins_screen.FavoriteCoinsViewModel
 import io.ktor.client.HttpClient
@@ -55,6 +56,13 @@ val sharedModule = module {
     /**
      * ViewModels
      */
+    viewModel { (coinId: String) ->
+        CoinDetailsViewModel(
+            getCoinDetailsUseCase = get(),
+            getPriceHistoryUseCase = get(),
+            coinId = coinId
+        )
+    }
     viewModel { CoinsListViewModel(get()) }
     viewModel {
         FavoriteCoinsViewModel(
