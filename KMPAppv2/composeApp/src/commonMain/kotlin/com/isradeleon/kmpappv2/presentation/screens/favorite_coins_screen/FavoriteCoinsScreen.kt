@@ -32,7 +32,6 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun FavoriteCoinsScreen(
-    modifier: Modifier,
     onCoinClicked: (String) -> Unit,
     onExploreCoinsClicked: () -> Unit
 ) {
@@ -42,7 +41,6 @@ fun FavoriteCoinsScreen(
 
     if (coins.isNotEmpty())
         FavoriteCoinsContent(
-            modifier = modifier,
             coins = coins,
             onCoinClicked = onCoinClicked,
             onDismissCoin = { id ->
@@ -51,18 +49,16 @@ fun FavoriteCoinsScreen(
         )
     else
         EmptyFavoriteCoinsContent(
-            modifier = modifier,
             onExploreCoinsClicked = onExploreCoinsClicked
         )
 }
 
 @Composable
 private fun EmptyFavoriteCoinsContent(
-    modifier: Modifier,
     onExploreCoinsClicked: () -> Unit
 ) {
     Box(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
         contentAlignment = Alignment.Center
@@ -93,13 +89,12 @@ private fun EmptyFavoriteCoinsContent(
 
 @Composable
 private fun FavoriteCoinsContent(
-    modifier: Modifier,
     coins: List<Coin>,
     onCoinClicked: (String) -> Unit,
     onDismissCoin: (String) -> Unit
 ) {
     Box(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {

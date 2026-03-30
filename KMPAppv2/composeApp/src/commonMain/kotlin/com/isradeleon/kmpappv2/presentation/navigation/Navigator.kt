@@ -1,7 +1,6 @@
 package com.isradeleon.kmpappv2.presentation.navigation
 
-import androidx.navigation.NavController
-import androidx.navigation.toRoute
+import androidx.navigation.NavHostController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -13,8 +12,8 @@ import kotlinx.coroutines.launch
 class Navigator {
     private val scope = CoroutineScope(Dispatchers.Main.immediate)
 
-    private lateinit var parentNavController: NavController
-    private lateinit var nestedNavController: NavController
+    private lateinit var parentNavController: NavHostController
+    private lateinit var nestedNavController: NavHostController
 
     private var nestedNavControllerObserveJob: Job? = null
     private var parentNavControllerObserveJob: Job? = null
@@ -23,7 +22,7 @@ class Navigator {
     val currentTab = MutableStateFlow<Screen?>(null)
     val isHome = MutableStateFlow(false)
 
-    fun setParentNavController(navController: NavController) {
+    fun setParentNavController(navController: NavHostController) {
         parentNavController = navController
 
         parentNavControllerObserveJob?.cancel()
@@ -31,11 +30,12 @@ class Navigator {
             navController.currentBackStackEntryFlow.map { backStackEntry ->
                 val screen = Screen.fromBackStackEntry(backStackEntry)
                 currentTab.value = screen
+                isHome.value = screen == Screen.FavoriteCoinsTab
             }.collect()
         }
     }
 
-    fun setNestedNavController(navController: NavController) {
+    fun setNestedNavController(navController: NavHostController) {
         nestedNavController = navController
 
         nestedNavControllerObserveJob?.cancel()
@@ -71,7 +71,7 @@ class Navigator {
     }
 
     companion object {
-        val NAVIGATION_TABS = listOf(
+        val NAVIGATION_TABS: List<Screen> = listOf(
             Screen.FavoriteCoinsTab,
             Screen.CoinsListTab
         )
