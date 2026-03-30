@@ -46,11 +46,16 @@ fun App() {
     val favoritesNavController = rememberNavController()
     val marketNavController = rememberNavController()
 
-    val navBackStackEntry by favoritesNavController.currentBackStackEntryAsState()
-    val currentDestination = navBackStackEntry?.destination
+    val favoritesBackStack by favoritesNavController.currentBackStackEntryAsState()
+    val favoritesDestination = favoritesBackStack?.destination
+
+    val marketBackStack by marketNavController.currentBackStackEntryAsState()
+    val marketDestination = marketBackStack?.destination
 
     // Check if the current destination has the Home via typesafe
-    val isHome = currentDestination?.hasRoute<Screen.FavoriteCoins>() == true
+    val favoritesIsAtHome = favoritesDestination?.hasRoute<Screen.FavoriteCoins>() == true
+    val marketIsAtHome = marketDestination?.hasRoute<Screen.CoinsList>() == true
+
     var selectedItem by rememberSaveable { mutableStateOf(0) }
     val bottomTabs = listOf(
         Screen.FavoriteCoins,
@@ -69,14 +74,16 @@ fun App() {
                     },
                     navigationIcon = {
                         if (
-                            selectedItem != 0 || !isHome
+                            selectedItem != 0 || !favoritesIsAtHome
                         ) {
                             IconButton(onClick = {
                                 // Navigate up the back stack
                                 if (selectedItem == 0) {
                                     favoritesNavController.popBackStack()
-                                } else if(!marketNavController.popBackStack()) {
+                                } else if(marketIsAtHome) {
                                     selectedItem = 0
+                                } else {
+                                    marketNavController.popBackStack()
                                 }
                             }) {
                                 Icon(

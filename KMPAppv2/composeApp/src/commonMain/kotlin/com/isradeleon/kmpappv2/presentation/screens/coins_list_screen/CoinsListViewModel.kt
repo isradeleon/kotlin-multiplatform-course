@@ -18,6 +18,9 @@ class CoinsListViewModel(
     // Implemented StateFlow, which stores the last state.
     private val _state = MutableStateFlow(CoinsListState())
     val state = _state
+        .onStart {
+            getCoinsList()
+        }
         // Replacement for the init VM function
         .stateIn( // Converts the flow into a state flow, viewModel-scoped.
             scope = viewModelScope,
@@ -32,7 +35,7 @@ class CoinsListViewModel(
             initialValue = CoinsListState()
         )
 
-    suspend fun getCoinsList() {
+    private suspend fun getCoinsList() {
         when(val coinsResponse = getCoinsUseCase.execute()) {
             is Outcome.Success -> {
                 _state.update {
