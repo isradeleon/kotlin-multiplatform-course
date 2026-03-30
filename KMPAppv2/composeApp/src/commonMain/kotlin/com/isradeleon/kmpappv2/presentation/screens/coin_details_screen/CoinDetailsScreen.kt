@@ -21,12 +21,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
+import com.isradeleon.kmpappv2.common.utils.formatFiatCurrency
+import com.isradeleon.kmpappv2.common.utils.formatPercentage
 import com.isradeleon.kmpappv2.domain.model.Coin
 import com.isradeleon.kmpappv2.domain.model.PriceHistoryItem
+import com.isradeleon.kmpappv2.presentation.extensions.isPositiveChange
+import com.isradeleon.kmpappv2.theme.LocalCoinRoutineColorsPalette
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
@@ -74,8 +79,11 @@ private fun CoinDetailsContent(
         modifier = Modifier.fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
-        Column(Modifier.padding(16.dp)) {
-            Row {
+        Column(
+            Modifier.padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 AsyncImage(
                     model = coin.iconUrl,
                     contentDescription = "${coin.name} icon",
@@ -84,12 +92,52 @@ private fun CoinDetailsContent(
                         .clip(CircleShape)
                         .size(80.dp)
                 )
+
                 Spacer(Modifier.width(16.dp))
-                PerformanceChart(
-                    modifier = Modifier.height(200.dp),
-                    nodes = priceHistory.map { it.price }
-                )
+
+                Column(
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Text(
+                        text = formatFiatCurrency(coin.price),
+                        color = MaterialTheme.colorScheme.onBackground,
+                        fontSize = MaterialTheme.typography.titleLarge.fontSize,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = coin.name,
+                        color = MaterialTheme.colorScheme.onBackground,
+                        fontSize = MaterialTheme.typography.titleMedium.fontSize
+                    )
+                }
+
+                Column(
+                    horizontalAlignment = Alignment.End
+                ) {
+                    Text(
+                        text = formatPercentage(coin.change),
+                        color = if (coin.isPositiveChange)
+                            LocalCoinRoutineColorsPalette.current.profitGreen
+                        else
+                            LocalCoinRoutineColorsPalette.current.lossRed,
+                        fontSize = MaterialTheme.typography.titleMedium.fontSize
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = coin.symbol,
+                        color = MaterialTheme.colorScheme.onBackground,
+                        fontSize = MaterialTheme.typography.titleMedium.fontSize
+                    )
+                }
             }
+
+            Spacer(Modifier.width(32.dp))
+
+            PerformanceChart(
+                modifier = Modifier.height(200.dp),
+                nodes = priceHistory.map { it.price }
+            )
         }
     }
 }
