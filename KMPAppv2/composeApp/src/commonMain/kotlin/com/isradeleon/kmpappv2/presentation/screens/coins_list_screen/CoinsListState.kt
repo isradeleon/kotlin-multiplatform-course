@@ -11,5 +11,6 @@ import org.jetbrains.compose.resources.StringResource
 @Stable
 data class CoinsListState(
     val error: StringResource? = null,
-    val coins: List<Coin> = emptyList()
+    val coins: List<Coin> = emptyList(),
+    val isLoading: Boolean = true
 )

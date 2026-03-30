@@ -40,7 +40,8 @@ class CoinsListViewModel(
             is Outcome.Success -> {
                 _state.update {
                     CoinsListState(
-                        coins = coinsResponse.data
+                        coins = coinsResponse.data,
+                        isLoading = false
                     )
                 }
             }
@@ -48,7 +49,8 @@ class CoinsListViewModel(
             is Outcome.Failure -> {
                 _state.update {
                     CoinsListState(
-                        error = coinsResponse.error.toStringResource()
+                        error = coinsResponse.error.toStringResource(),
+                        isLoading = false
                     )
                 }
             }

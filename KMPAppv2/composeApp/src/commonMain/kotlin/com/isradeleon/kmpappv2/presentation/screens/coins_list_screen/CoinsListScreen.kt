@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -25,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
@@ -33,6 +35,7 @@ import com.isradeleon.kmpappv2.common.utils.formatPercentage
 import com.isradeleon.kmpappv2.domain.model.Coin
 import com.isradeleon.kmpappv2.presentation.extensions.isPositiveChange
 import com.isradeleon.kmpappv2.theme.LocalCoinRoutineColorsPalette
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -42,10 +45,29 @@ fun CoinsListScreen(
     val coinsListViewModel = koinViewModel<CoinsListViewModel>()
     val state by coinsListViewModel.state.collectAsStateWithLifecycle() // Lifecycle aware!
 
-    CoinsListContent(
-        state = state,
-        onCoinClicked = onCoinClicked
-    )
+    if (state.isLoading)
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            CircularProgressIndicator()
+        }
+    else if (state.error != null)
+        Box(
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = stringResource(state.error!!),
+                modifier = Modifier.padding(32.dp).fillMaxWidth(),
+                color = MaterialTheme.colorScheme.error,
+                textAlign = TextAlign.Center
+            )
+        }
+    else
+        CoinsListContent(
+            state = state,
+            onCoinClicked = onCoinClicked
+        )
 }
 
 @Composable
