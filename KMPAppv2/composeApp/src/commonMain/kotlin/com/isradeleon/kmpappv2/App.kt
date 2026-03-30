@@ -6,6 +6,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,6 +34,7 @@ fun App() {
     val navController = rememberNavController()
     val backStack by navController.currentBackStackEntryAsState()
     val isHome = backStack?.destination?.hasRoute<Screen.Home>() ?: false
+    val selectedBottomTab = remember { mutableStateOf(0) }
 
     KMPAppV2Theme {
         Scaffold(
@@ -52,9 +54,10 @@ fun App() {
             ) {
                 composable<Screen.Home> {
                     HomeScreen(
+                        selectedBottomTab = selectedBottomTab,
                         onCoinClicked = {
                             navController.navigate(Screen.CoinDetails)
-                        }
+                        },
                     )
                 }
                 composable<Screen.CoinDetails> { backStackEntry ->
@@ -67,11 +70,11 @@ fun App() {
 
 @Composable
 private fun HomeScreen(
-    onCoinClicked: (String) -> Unit
+    onCoinClicked: (String) -> Unit,
+    selectedBottomTab: MutableState<Int>,
 ) {
     val scope = rememberCoroutineScope()
     val bottomTabs = listOf(Screen.FavoriteCoinsTab, Screen.CoinsListTab)
-    val currentTab = remember { mutableStateOf(bottomTabs[0]) }
     val pagerState = rememberPagerState(
         initialPage = 0,
         pageCount = { 2 },
@@ -81,9 +84,9 @@ private fun HomeScreen(
         bottomBar = {
             MyBottomNavbar(
                 navItems = bottomTabs,
-                currentNavItem = currentTab.value,
+                currentNavItem = bottomTabs[selectedBottomTab.value],
                 onNavItemClicked = {
-                    currentTab.value = it
+                    selectedBottomTab.value = bottomTabs.indexOf(it)
                     scope.launch {
                         pagerState.animateScrollToPage(
                             bottomTabs.indexOf(it)
