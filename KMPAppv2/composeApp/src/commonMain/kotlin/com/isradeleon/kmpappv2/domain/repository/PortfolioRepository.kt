@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface PortfolioRepository {
     fun observeFavoriteCoins(): Flow<List<Coin>>
+    fun observeFavoriteById(id: String): Flow<Coin?>
     suspend fun saveFavoriteCoin(coin: Coin)
     suspend fun removeFavoriteCoin(id: String)
 }

@@ -60,6 +60,7 @@ val sharedModule = module {
         CoinDetailsViewModel(
             getCoinDetailsUseCase = get(),
             getPriceHistoryUseCase = get(),
+            observeFavoriteByIdUseCase = get(),
             coinId = coinId
         )
     }

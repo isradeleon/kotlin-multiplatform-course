@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -44,6 +46,8 @@ fun CoinDetailsScreen(
         parametersOf(coinId)
     }
     val state by coinDetailsViewModel.state.collectAsStateWithLifecycle()
+    val favoriteCoin by coinDetailsViewModel.observeFavorite(coinId)
+        .collectAsStateWithLifecycle(null)
 
     if (state.isLoading)
         Box(
@@ -67,14 +71,24 @@ fun CoinDetailsScreen(
     else if (state.coin != null)
         CoinDetailsContent(
             coin = state.coin!!,
-            priceHistory = state.priceHistory
+            priceHistory = state.priceHistory,
+            isInFavorites = favoriteCoin != null,
+            onAddToFavoritesClicked = {
+                coinDetailsViewModel.addToFavorites()
+            },
+            onRemoveFromFavoritesClicked = {
+                coinDetailsViewModel.removeFromFavorites()
+            }
         )
 }
 
 @Composable
 private fun CoinDetailsContent(
     coin: Coin,
-    priceHistory: List<PriceHistoryItem>
+    priceHistory: List<PriceHistoryItem>,
+    isInFavorites: Boolean,
+    onAddToFavoritesClicked: () -> Unit,
+    onRemoveFromFavoritesClicked: () -> Unit
 ) {
     Box(
         modifier = Modifier.fillMaxSize()
@@ -138,6 +152,27 @@ private fun CoinDetailsContent(
             PerformanceChart(
                 modifier = Modifier.height(200.dp),
                 nodes = priceHistory.map { it.price }
+            )
+        }
+
+        Button(
+            modifier = Modifier.fillMaxWidth().align(Alignment.BottomCenter),
+            onClick = {
+                if (isInFavorites)
+                    onAddToFavoritesClicked()
+                else
+                    onRemoveFromFavoritesClicked()
+            },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = if (isInFavorites)
+                        LocalCoinRoutineColorsPalette.current.profitGreen
+                    else LocalCoinRoutineColorsPalette.current.lossRed
+            )
+        ) {
+            Text(
+                text = if (isInFavorites) "Remove from favorites" else "Add to favorites",
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onPrimary
             )
         }
     }

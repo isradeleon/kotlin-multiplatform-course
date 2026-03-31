@@ -15,7 +15,7 @@ interface FavoriteDao {
     fun getAllFavoriteCoins(): Flow<List<FavoriteCoinEntity>>
 
     @Query("SELECT * FROM FavoriteCoinEntity WHERE id = :id")
-    suspend fun getFavoriteCoinById(id: String): FavoriteCoinEntity?
+    fun getFavoriteCoinById(id: String): Flow<FavoriteCoinEntity?>
 
     @Query("DELETE FROM FavoriteCoinEntity WHERE id = :id")
     suspend fun deleteFavoriteCoinById(id: String)

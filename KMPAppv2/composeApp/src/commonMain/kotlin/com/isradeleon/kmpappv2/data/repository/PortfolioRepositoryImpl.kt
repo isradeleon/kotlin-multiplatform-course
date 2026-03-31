@@ -19,6 +19,12 @@ class PortfolioRepositoryImpl(
         }
     }
 
+    override fun observeFavoriteById(id: String): Flow<Coin?> {
+        return favoriteDao.getFavoriteCoinById(id).map {
+            it?.toCoin()
+        }
+    }
+
     override suspend fun saveFavoriteCoin(coin: Coin) {
         favoriteDao.upsert(
             coin.toFavoriteCoinEntity()
