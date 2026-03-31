@@ -11,12 +11,9 @@ import com.isradeleon.kmpappv2.domain.use_cases.RemoveFavoriteUseCase
 import kmpappv2.composeapp.generated.resources.Res
 import kmpappv2.composeapp.generated.resources.error_unknown
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -29,19 +26,15 @@ class CoinDetailsViewModel(
     private val coinId: String
 ): ViewModel() {
     private val _state = MutableStateFlow(CoinDetailsState())
-    val state = _state.onStart {
-        getAllCoinData()
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = CoinDetailsState()
-    )
+    val state = _state
 
-    fun observeFavorite(id: String) = observeFavoriteByIdUseCase.execute(id).stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(3_000),
-        initialValue = null
-    )
+    init {
+        viewModelScope.launch {
+            getAllCoinData()
+        }
+    }
+
+    fun observeFavorite(id: String) = observeFavoriteByIdUseCase.execute(id)
 
     fun addToFavorites() {
         viewModelScope.launch {
