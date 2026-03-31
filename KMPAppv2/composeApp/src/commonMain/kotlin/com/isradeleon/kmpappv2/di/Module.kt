@@ -61,6 +61,8 @@ val sharedModule = module {
             getCoinDetailsUseCase = get(),
             getPriceHistoryUseCase = get(),
             observeFavoriteByIdUseCase = get(),
+            addToFavoritesUseCase = get(),
+            removeFavoriteUseCase = get(),
             coinId = coinId
         )
     }
