@@ -10,9 +10,11 @@ class UpdateLocalCoinsUseCase(
     private val coinsRepository: CoinsRepository
 ) {
     suspend fun execute() {
+        val favorites = portfolioRepository.observeFavoriteCoins().first()
+        if (favorites.isEmpty()) return
+
         val coinsData = coinsRepository.getCoins()
         if (coinsData is Outcome.Success) {
-            val favorites = portfolioRepository.observeFavoriteCoins().first()
             val coins = coinsData.data.filter { coin ->
                 favorites.find { it.id == coin.id } != null
             }
