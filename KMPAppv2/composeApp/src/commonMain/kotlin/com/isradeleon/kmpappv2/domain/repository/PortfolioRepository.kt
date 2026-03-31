@@ -7,5 +7,6 @@ interface PortfolioRepository {
     fun observeFavoriteCoins(): Flow<List<Coin>>
     fun observeFavoriteById(id: String): Flow<Coin?>
     suspend fun saveFavoriteCoin(coin: Coin)
+    suspend fun saveFavoriteCoinsList(coins: List<Coin>)
     suspend fun removeFavoriteCoin(id: String)
 }

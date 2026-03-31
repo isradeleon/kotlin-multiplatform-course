@@ -31,6 +31,12 @@ class PortfolioRepositoryImpl(
         )
     }
 
+    override suspend fun saveFavoriteCoinsList(coins: List<Coin>) {
+        favoriteDao.upsert(
+            coins.map { it.toFavoriteCoinEntity() }
+        )
+    }
+
     override suspend fun removeFavoriteCoin(id: String) {
         favoriteDao.deleteFavoriteCoinById(id)
     }
