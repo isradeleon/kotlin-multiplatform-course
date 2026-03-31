@@ -18,8 +18,9 @@ class UpdateLocalCoinsUseCase(
             val coins = coinsData.data.filter { coin ->
                 favorites.find { it.id == coin.id } != null
             }
-            if (coins.isNotEmpty())
-                portfolioRepository.saveFavoriteCoinsList(coins)
+            if (coins.isNotEmpty()) coins.forEach { coin ->
+                portfolioRepository.saveFavoriteCoin(coin)
+            }
         }
     }
 }
