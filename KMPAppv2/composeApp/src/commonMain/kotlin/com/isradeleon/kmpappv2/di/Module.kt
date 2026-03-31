@@ -71,7 +71,9 @@ val sharedModule = module {
     viewModel { CoinsListViewModel(get()) }
     viewModel {
         FavoriteCoinsViewModel(
-        get(), get()
+        get(),
+            get(),
+            get()
         )
     }
 

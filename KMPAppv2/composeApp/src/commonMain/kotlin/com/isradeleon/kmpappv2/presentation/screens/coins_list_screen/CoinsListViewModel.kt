@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.isradeleon.kmpappv2.common.Outcome
 import com.isradeleon.kmpappv2.common.utils.toStringResource
 import com.isradeleon.kmpappv2.domain.use_cases.GetCoinsUseCase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -17,7 +19,7 @@ class CoinsListViewModel(
     val state = _state
 
     init {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             getCoinsList()
         }
     }

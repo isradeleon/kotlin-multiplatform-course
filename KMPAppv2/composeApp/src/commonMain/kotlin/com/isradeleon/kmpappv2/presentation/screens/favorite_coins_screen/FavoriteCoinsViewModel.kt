@@ -15,7 +15,7 @@ class FavoriteCoinsViewModel(
     private val updateLocalCoinsUseCase: UpdateLocalCoinsUseCase
 ): ViewModel() {
     init {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             updateLocalCoinsUseCase.execute()
         }
     }

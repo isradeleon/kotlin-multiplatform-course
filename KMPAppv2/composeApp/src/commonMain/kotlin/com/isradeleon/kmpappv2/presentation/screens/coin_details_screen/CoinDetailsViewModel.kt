@@ -10,6 +10,8 @@ import com.isradeleon.kmpappv2.domain.use_cases.ObserveFavoriteByIdUseCase
 import com.isradeleon.kmpappv2.domain.use_cases.RemoveFavoriteUseCase
 import kmpappv2.composeapp.generated.resources.Res
 import kmpappv2.composeapp.generated.resources.error_unknown
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
@@ -29,7 +31,7 @@ class CoinDetailsViewModel(
     val state = _state
 
     init {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             getAllCoinData()
         }
     }
@@ -37,7 +39,7 @@ class CoinDetailsViewModel(
     fun observeFavorite(id: String) = observeFavoriteByIdUseCase.execute(id)
 
     fun addToFavorites() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             _state.value.coin?.let {
                 addToFavoritesUseCase.execute(it)
             }
@@ -45,7 +47,7 @@ class CoinDetailsViewModel(
     }
 
     fun removeFromFavorites() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             removeFavoriteUseCase.execute(coinId)
         }
     }
