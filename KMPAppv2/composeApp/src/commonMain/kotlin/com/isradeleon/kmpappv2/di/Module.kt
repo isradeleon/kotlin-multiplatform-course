@@ -15,6 +15,7 @@ import com.isradeleon.kmpappv2.domain.use_cases.AddToFavoritesUseCase
 import com.isradeleon.kmpappv2.domain.use_cases.GetCoinDetailUseCase
 import com.isradeleon.kmpappv2.domain.use_cases.GetCoinsUseCase
 import com.isradeleon.kmpappv2.domain.use_cases.GetPriceHistoryUseCase
+import com.isradeleon.kmpappv2.domain.use_cases.ObserveFavoriteByIdUseCase
 import com.isradeleon.kmpappv2.domain.use_cases.ObserveFavoritesUseCase
 import com.isradeleon.kmpappv2.domain.use_cases.RemoveFavoriteUseCase
 import com.isradeleon.kmpappv2.presentation.screens.coin_details_screen.CoinDetailsViewModel
@@ -80,6 +81,7 @@ val sharedModule = module {
     factory { GetCoinDetailUseCase(get()) }
     factory { GetPriceHistoryUseCase(get()) }
     factory { ObserveFavoritesUseCase(get()) }
+    factory { ObserveFavoriteByIdUseCase(get()) }
     factory { RemoveFavoriteUseCase(get()) }
     factory { AddToFavoritesUseCase(get()) }
 

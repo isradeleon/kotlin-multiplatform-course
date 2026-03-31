@@ -156,17 +156,20 @@ private fun CoinDetailsContent(
         }
 
         Button(
-            modifier = Modifier.fillMaxWidth().align(Alignment.BottomCenter),
+            modifier = Modifier.fillMaxWidth()
+                .align(Alignment.BottomCenter)
+                .padding(32.dp, 64.dp),
             onClick = {
                 if (isInFavorites)
-                    onAddToFavoritesClicked()
-                else
                     onRemoveFromFavoritesClicked()
+                else
+                    onAddToFavoritesClicked()
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = if (isInFavorites)
+                        LocalCoinRoutineColorsPalette.current.lossRed
+                    else
                         LocalCoinRoutineColorsPalette.current.profitGreen
-                    else LocalCoinRoutineColorsPalette.current.lossRed
             )
         ) {
             Text(

@@ -121,12 +121,9 @@ private fun FavoriteCoinsList(
             items = coins,
             key = { it.id }
         ) {
-            FavoriteCoinItem(
+            CoinListItem(
                 coin = it,
-                onCoinClicked = onCoinClicked,
-                onDismiss = {
-                    onDismissCoin(it.id)
-                }
+                onCoinClicked = onCoinClicked
             )
 
             HorizontalDivider()
