@@ -16,8 +16,7 @@ material3 = "1.10.0-alpha05"
 
 # Additional library versions
 koin = "4.2.0"
-coil = "2.7.0"
-coilKtor = "2.4.0"
+coil-compose = "3.0.0"
 ktor = "3.4.2"
 kotlinx-serialization = "1.10.0"
 room = "2.8.4"
@@ -51,14 +50,15 @@ composeUiToolingPreview = { module = "org.jetbrains.compose.ui:ui-tooling-previe
 
 # Koin
 koinCore = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+koinCompose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
 koinComposeViewModel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
 koinAndroid = { module = "io.insert-koin:koin-android", version.ref = "koin" }
-koinCompose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
+koinAndroidCompose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
 koinNavigation = { module = "io.insert-koin:koin-compose-viewmodel-navigation", version.ref = "koin" }
 
 # Coil
-coilCompose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
-coilKtor = { module = "io.coil-kt:coil-ktor", version.ref = "coilKtor" }
+coilCompose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil-compose" }
+coilKtor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil-compose" }
 
 # Ktor
 ktorClientCore = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }

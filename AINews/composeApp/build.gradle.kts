@@ -35,11 +35,9 @@ kotlin {
             implementation(libs.composeUiToolingPreview)
             implementation(libs.androidxActivityCompose)
             // Android-specific dependencies
-            implementation(libs.coilCompose)
-            implementation(libs.coilKtor)
             implementation(libs.ktorClientOkhttp)
             implementation(libs.koinAndroid)
-            implementation(libs.koinCompose)
+            implementation(libs.koinAndroidCompose)
         }
         iosMain.dependencies {
             implementation(libs.ktorClientDarwin)
@@ -60,11 +58,14 @@ kotlin {
             implementation(libs.kotlinxSerializationJson)
             implementation(libs.kotlinxDatetime)
             implementation(libs.koinCore)
+            implementation(libs.koinCompose)
             implementation(libs.koinNavigation)
             implementation(libs.koinComposeViewModel)
             implementation(libs.composeMaterialIconsExtended)
             implementation(libs.roomRuntime)
             implementation(libs.sqlite.bundled)
+            implementation(libs.coilCompose)
+            implementation(libs.coilKtor)
         }
         commonTest.dependencies {
             implementation(libs.kotlinTest)
