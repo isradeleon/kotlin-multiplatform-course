@@ -6,6 +6,11 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.kotlinxSerialization)
+    // KSP plugin is applied for Android Room annotation processing
+    alias(libs.plugins.ksp)
+    // Room plugin
+    alias(libs.plugins.room)
 }
 
 kotlin {
@@ -27,21 +32,42 @@ kotlin {
     
     sourceSets {
         androidMain.dependencies {
-            implementation(libs.compose.uiToolingPreview)
-            implementation(libs.androidx.activity.compose)
+            implementation(libs.composeUiToolingPreview)
+            implementation(libs.androidxActivityCompose)
+            // Android-specific dependencies
+            implementation(libs.coilCompose)
+            implementation(libs.coilKtor)
+            implementation(libs.ktorClientOkhttp)
+            implementation(libs.koinAndroid)
+            implementation(libs.koinCompose)
+        }
+        iosMain.dependencies {
+            implementation(libs.ktorClientDarwin)
         }
         commonMain.dependencies {
-            implementation(libs.compose.runtime)
-            implementation(libs.compose.foundation)
-            implementation(libs.compose.material3)
-            implementation(libs.compose.ui)
-            implementation(libs.compose.components.resources)
-            implementation(libs.compose.uiToolingPreview)
-            implementation(libs.androidx.lifecycle.viewmodelCompose)
-            implementation(libs.androidx.lifecycle.runtimeCompose)
+            implementation(libs.composeRuntime)
+            implementation(libs.composeFoundation)
+            implementation(libs.composeMaterial3)
+            implementation(libs.composeUi)
+            implementation(libs.composeComponentsResources)
+            implementation(libs.composeUiToolingPreview)
+            implementation(libs.androidxLifecycleViewModelCompose)
+            implementation(libs.androidxLifecycleRuntimeCompose)
+            // Common libraries
+            implementation(libs.ktorClientCore)
+            implementation(libs.ktorClientContentNegotiation)
+            implementation(libs.ktorSerializationKotlinx)
+            implementation(libs.kotlinxSerializationJson)
+            implementation(libs.kotlinxDatetime)
+            implementation(libs.koinCore)
+            implementation(libs.koinNavigation)
+            implementation(libs.koinComposeViewModel)
+            implementation(libs.composeMaterialIconsExtended)
+            implementation(libs.roomRuntime)
+            implementation(libs.sqlite.bundled)
         }
         commonTest.dependencies {
-            implementation(libs.kotlin.test)
+            implementation(libs.kotlinTest)
         }
     }
 }
@@ -73,7 +99,16 @@ android {
     }
 }
 
+// Room schema directory
+room {
+    schemaDirectory("$projectDir/schemas")
+}
+
 dependencies {
-    debugImplementation(libs.compose.uiTooling)
+    debugImplementation(libs.composeUiTooling)
+    // KSP processor for Room (Android)
+    ksp(libs.roomCompiler)
+    // also register for android-specific KSP configuration
+    add("kspAndroid", libs.roomCompiler)
 }
 
