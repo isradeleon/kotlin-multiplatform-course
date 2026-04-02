@@ -8,25 +8,14 @@ The UI is shared with Compose Multiplatform.
 
 Here we list the main dependencies of the project.
 
-#### Dependency Injection
 * Koin
-* Koin ViewModel
-* Koin Navigation
-
-#### Networking & image loading
-* Coil Compose
-  * Coil Ktor
+* Coil
 * Ktor
   * Ktor Client Android
   * Ktor Client iOS
 * Kotlin Serialization
-
-#### Data persistence
+* KSP (Kotlin Symbol Processing)
 * Room
 * SQLite bundled
-
-#### Other dependencies
-* KSP (Kotlin Symbol Processing)
 * Kotlin Date Time (Jetbrains)
 * Material icons extended (Jetbrains)
-
