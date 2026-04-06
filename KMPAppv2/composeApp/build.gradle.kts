@@ -14,7 +14,7 @@ plugins {
     alias(libs.plugins.ksp)
 
     // BuildKonfig plugin to manage local API keys
-    id("com.codingfeline.buildkonfig")
+    alias(libs.plugins.buildkonfig)
 
     // Room plugin
     alias(libs.plugins.room)
@@ -144,6 +144,16 @@ buildkonfig {
 
         // Add the property to the generated BuildKonfig object
         buildConfigField(STRING, "COINRANKING_KEY", apiKey)
+    }
+
+    // Target-specific overrides (Optional)
+    targetConfigs {
+        create("android") {
+            buildConfigField(STRING, "PLATFORM", "Android")
+        }
+        create("ios") {
+            buildConfigField(STRING, "PLATFORM", "iOS")
+        }
     }
 }
 

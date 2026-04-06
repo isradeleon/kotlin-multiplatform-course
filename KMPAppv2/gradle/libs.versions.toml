@@ -35,6 +35,9 @@ kotlin-date-time = "0.7.1"
 # Material icons jetbrains
 materialIconsExtended = "1.7.3"
 
+# BuildKonfig
+buildkonfig = "0.17.1" # Check for latest version
+
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-testJunit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
@@ -103,6 +106,9 @@ kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", versio
 
 # Room plugin
 room = { id = "androidx.room", version.ref = "room" }
+
+# BuildKonfig plugin
+buildkonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildkonfig" }
 
 [bundles]
 ktor = [
