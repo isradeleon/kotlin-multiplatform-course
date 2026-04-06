@@ -145,16 +145,6 @@ buildkonfig {
         // Add the property to the generated BuildKonfig object
         buildConfigField(STRING, "COINRANKING_KEY", apiKey)
     }
-
-    // Target-specific overrides (Optional)
-    targetConfigs {
-        create("android") {
-            buildConfigField(STRING, "PLATFORM", "Android")
-        }
-        create("ios") {
-            buildConfigField(STRING, "PLATFORM", "iOS")
-        }
-    }
 }
 
 // Room schema directory
